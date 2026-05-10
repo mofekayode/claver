@@ -26,7 +26,7 @@ const SITE_DESCRIPTION =
   "Tech-enabled commercial cleaning. Photo verification every visit, monthly service reports, 24-hour issue resolution.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://claverservices.com"),
+  metadataBase: new URL("https://www.claverservices.com"),
   title: {
     default: `${SITE_NAME} · Commercial cleaning that proves itself`,
     template: `%s · ${SITE_NAME}`,

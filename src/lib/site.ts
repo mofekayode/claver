@@ -4,7 +4,7 @@ export const site = {
   tagline: "Commercial cleaning that proves itself, every visit.",
   description:
     "Tech-enabled commercial cleaning. Photo verification every visit, monthly service reports, 24-hour issue resolution.",
-  url: "https://claverservices.com",
+  url: "https://www.claverservices.com",
   phone: "(510) 689-1362",
   phoneHref: "tel:+15106891362",
   phoneE164: "+15106891362",
