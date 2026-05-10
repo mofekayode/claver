@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# debugging artifacts produced by scripts/screenshots.mjs + probe-*.mjs
+/screenshots/

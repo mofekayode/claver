@@ -1,0 +1,13 @@
+import { chromium } from "playwright";
+const browser = await chromium.launch();
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 });
+const page = await ctx.newPage();
+await page.goto("http://localhost:3030/quote", { waitUntil: "networkidle" });
+await page.waitForSelector('input[name="address"]');
+await page.click('input[name="address"]');
+await page.keyboard.type("1234 broadway oak", { delay: 80 });
+await page.waitForTimeout(800);
+const box = await page.locator('input[name="address"]').boundingBox();
+const clipY = Math.max(0, box.y - 80);
+await page.screenshot({ path: "screenshots/probe-typing-open.png", clip: { x: 0, y: clipY, width: 1440, height: 600 } });
+await browser.close();
