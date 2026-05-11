@@ -37,7 +37,9 @@ export function SiteFooter() {
               <span>Licensed and insured</span>
               <span aria-hidden="true">·</span>
               <a
-                href="/insurance-certificate.pdf"
+                href="/COI.pdf"
+                target="_blank"
+                rel="noopener"
                 className="underline-offset-4 hover:underline"
               >
                 Certificate

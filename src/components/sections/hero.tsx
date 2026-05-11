@@ -71,7 +71,7 @@ export function Hero() {
             </li>
             <li className="inline-flex items-center gap-2">
               <DocIcon className="w-4 h-4 text-sage" />
-              <span>$2M liability coverage</span>
+              <span>$1M liability coverage</span>
             </li>
             <li aria-hidden="true" className="text-foreground/25">
               ·
@@ -87,7 +87,7 @@ export function Hero() {
           <Stat label="Issue response" value="< 1 hour" />
           <Stat label="Visits verified" value="100%" />
           <Stat label="Reports cadence" value="Monthly" />
-          <Stat label="Insurance" value="$2M / occurrence" />
+          <Stat label="Insurance" value="$1M / occurrence" />
         </div>
       </Container>
     </section>
