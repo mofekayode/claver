@@ -6,9 +6,9 @@ import { ThankYouTracker } from "@/components/thank-you-tracker";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Thanks — book your walkthrough",
+  title: "Thanks, book your walkthrough",
   description:
-    "Your quote request is in. Book your free walkthrough now and we'll have a tailored proposal in your inbox the same week.",
+    "Your quote request is in. Book your free walkthrough now and you'll have a tailored proposal in your inbox within 24 hours of the visit.",
   robots: { index: false, follow: false },
 };
 
@@ -40,10 +40,16 @@ export default async function ThankYouPage({
             motion.
           </h1>
           <p className="mt-5 text-[17px] text-muted leading-[1.55]">
-            We received your details and our team will be in touch within one
-            business day. To get a tailored quote faster, book your free
-            walkthrough below. It takes 20 minutes, on-site or over a quick
-            call, and the quote follows within the week.
+            I&rsquo;ll be in touch within one business day.
+          </p>
+          <p className="mt-4 text-[17px] text-muted leading-[1.55]">
+            To move faster, book your free 30-minute walkthrough below.
+            Commercial cleaning quotes need a site visit because every space is
+            different. After we walk through, I&rsquo;ll send your detailed
+            proposal within 24 hours.
+          </p>
+          <p className="mt-4 text-[15px] text-sage font-medium">
+            No pressure, no commitment.
           </p>
         </div>
 
@@ -54,30 +60,13 @@ export default async function ThankYouPage({
           />
         </div>
 
-        <div className="mt-12 rounded-2xl border border-border/70 bg-subtle/40 p-7 md:p-8">
-          <p className="text-[14px] uppercase tracking-[0.14em] text-muted">
-            Need to reach us sooner?
-          </p>
-          <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-[16px]">
-            <a
-              href={site.phoneHref}
-              className="text-foreground font-medium tabular-nums hover:text-accent transition-colors"
-            >
-              Call {site.phone}
-            </a>
-            <span className="text-foreground/30" aria-hidden="true">
-              ·
-            </span>
-            <a
-              href={site.emailHref}
-              className="text-foreground hover:text-accent transition-colors"
-            >
-              {site.email}
-            </a>
-          </div>
-          <p className="mt-3 text-[14px] text-muted">
-            {site.hours}. We respond to every quote request within one business
-            day.
+        <div className="mt-10 flex items-center gap-3">
+          <span
+            className="h-px w-8 bg-border"
+            aria-hidden="true"
+          />
+          <p className="font-serif italic text-[16px] text-foreground/75">
+            {site.founder.name}, {site.founder.title}
           </p>
         </div>
 
