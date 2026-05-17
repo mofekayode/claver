@@ -1,13 +1,16 @@
-import Link from "next/link";
 import { Container } from "@/components/container";
 import { QuoteForm } from "@/app/quote/quote-form";
 import { PaidLandingTracker } from "@/components/paid-landing-tracker";
-import type { CityConfig } from "@/lib/paid-landing-cities";
 
-export function PaidLanding({ city }: { city: CityConfig }) {
+/**
+ * Single paid landing page for Google Ads traffic. Inclusive headline so
+ * visitors from any of our 5 service cities (Oakland, Berkeley, Emeryville,
+ * Alameda, Piedmont) feel addressed.
+ */
+export function PaidLanding() {
   return (
     <>
-      <PaidLandingTracker slug={city.slug} city={city.city} />
+      <PaidLandingTracker slug="east-bay-commercial-cleaning" city="East Bay" />
 
       {/* ===== HERO ===== */}
       <section className="relative pt-12 md:pt-20 pb-10 md:pb-14">
@@ -18,11 +21,11 @@ export function PaidLanding({ city }: { city: CityConfig }) {
                 <span className="absolute inset-0 rounded-full bg-sage opacity-60 animate-ping" />
                 <span className="relative rounded-full bg-sage h-1.5 w-1.5" />
               </span>
-              Now serving {city.city} and the East Bay
+              Now serving the East Bay
             </div>
 
             <h1 className="mt-7 font-serif text-[44px] leading-[1.05] tracking-[-0.02em] sm:text-[56px] md:text-[68px] lg:text-[72px]">
-              {city.city} commercial cleaning that{" "}
+              East Bay commercial cleaning that{" "}
               <span
                 className="text-accent italic"
                 style={{ fontVariationSettings: "'SOFT' 100" }}
@@ -34,12 +37,13 @@ export function PaidLanding({ city }: { city: CityConfig }) {
 
             <p className="mt-7 max-w-2xl text-lg md:text-xl text-muted leading-[1.55]">
               Photo verification, monthly service reports, and 24-hour issue
-              resolution. The standard for {city.city} office managers who are
+              resolution. The standard for East Bay office managers who are
               done chasing their cleaning company.
             </p>
 
             <p className="mt-5 max-w-2xl text-[15px] text-muted/90">
-              {city.localFlavor}
+              Serving Oakland, Berkeley, Emeryville, Alameda, and Piedmont
+              with crews based across the East Bay.
             </p>
 
             <ul
@@ -96,7 +100,7 @@ export function PaidLanding({ city }: { city: CityConfig }) {
               Request a quote
             </p>
             <h2 className="mt-4 font-serif text-[34px] md:text-[44px] leading-[1.05] tracking-[-0.02em]">
-              Tell us about your {city.city} space.
+              Tell us about your space.
             </h2>
             <p className="mt-5 text-muted text-[17px] leading-[1.55]">
               Free walkthrough within 24 hours. Custom quote the same week. No
@@ -133,8 +137,6 @@ export function PaidLanding({ city }: { city: CityConfig }) {
               body="If the proposal works, we onboard you with photo verification, your monthly report cadence, and direct lines to your account owner."
             />
           </ol>
-
-          <p className="mt-12 text-[14px] text-muted">{city.nearbyText}</p>
         </Container>
       </section>
     </>
