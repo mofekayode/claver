@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Container } from "@/components/container";
 import { Button } from "@/components/button";
 import { FinalCta } from "@/components/sections/final-cta";
@@ -101,6 +102,12 @@ export default function HowItWorksPage() {
                       </li>
                     ))}
                   </ul>
+
+                  <div className="mt-10">
+                    {p.n === "01" && <PhotoGridMock />}
+                    {p.n === "02" && <ReportPreviewMock />}
+                    {p.n === "03" && <ChatThreadMock />}
+                  </div>
                 </div>
               </div>
             ))}
@@ -141,6 +148,214 @@ export default function HowItWorksPage() {
 
       <FinalCta />
     </>
+  );
+}
+
+// ============ MOCKS ============
+
+const PILLAR_1_PHOTOS = [
+  { src: "/report/lobby.jpg", label: "Lobby" },
+  { src: "/report/conference-a.jpg", label: "Conference A" },
+  { src: "/report/kitchen.jpg", label: "Kitchen" },
+  { src: "/report/restrooms.jpg", label: "Restrooms" },
+];
+
+function PhotoGridMock() {
+  return (
+    <figure className="rounded-2xl border border-border/70 bg-background p-5 md:p-6 shadow-[0_24px_60px_-30px_rgba(28,37,32,0.18)]">
+      <figcaption className="flex items-center justify-between text-[12px] uppercase tracking-[0.12em] text-muted">
+        <span>Visit 14 of 22 · Jun 12, 6:42 PM</span>
+        <span className="inline-flex items-center gap-1.5 text-sage normal-case tracking-normal">
+          <span className="inline-flex h-1.5 w-1.5 rounded-full bg-sage" /> Verified
+        </span>
+      </figcaption>
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        {PILLAR_1_PHOTOS.map((p) => (
+          <div
+            key={p.src}
+            className="relative aspect-4/3 rounded-lg ring-1 ring-border/60 overflow-hidden bg-subtle"
+          >
+            <Image
+              src={p.src}
+              alt={`${p.label} — verified clean`}
+              fill
+              sizes="(min-width: 768px) 14vw, 40vw"
+              className="object-cover"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-linear-to-t from-foreground/40 via-transparent to-foreground/10"
+            />
+            <div className="absolute top-2 right-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-sage text-background ring-1 ring-background/60">
+              <CheckIcon className="w-3 h-3" />
+            </div>
+            <div className="absolute bottom-2 left-2 right-2 text-[11px] md:text-[12px] font-medium text-white drop-shadow-sm">
+              {p.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </figure>
+  );
+}
+
+function ReportPreviewMock() {
+  return (
+    <figure className="rounded-2xl border border-border/70 bg-background overflow-hidden shadow-[0_24px_60px_-30px_rgba(28,37,32,0.18)]">
+      {/* Faux PDF header bar */}
+      <div className="flex items-center justify-between px-5 py-3 border-b border-border/60 bg-subtle/40 text-[12px] text-muted">
+        <span className="inline-flex items-center gap-2">
+          <span className="inline-flex h-2 w-2 rounded-full bg-sage" />
+          May 2026 · Acme HQ
+        </span>
+        <span className="tabular-nums">claver_report_may_2026.pdf</span>
+      </div>
+
+      <div className="p-5 md:p-7">
+        <div className="font-serif text-[20px] md:text-[22px] tracking-[-0.01em]">
+          Monthly service report
+        </div>
+        <div className="mt-1 text-[12px] uppercase tracking-[0.12em] text-muted">
+          Visits May 1 – May 31 · Crew M. Rodriguez, A. Tan, J. Park
+        </div>
+
+        {/* Mini stat strip */}
+        <div className="mt-5 grid grid-cols-3 gap-2 md:gap-3">
+          <MiniStat label="Visits" value="22" />
+          <MiniStat label="Issues" value="2" />
+          <MiniStat label="Avg resp" value="34m" />
+        </div>
+
+        {/* Photo strip */}
+        <div className="mt-5">
+          <div className="text-[11px] uppercase tracking-[0.12em] text-muted">
+            132 photos · 6 zones
+          </div>
+          <div className="mt-2 grid grid-cols-6 gap-1.5">
+            {PILLAR_1_PHOTOS.slice(0, 4).concat(PILLAR_1_PHOTOS.slice(0, 2)).map((p, i) => (
+              <div
+                key={`${p.src}-${i}`}
+                className="relative aspect-square rounded ring-1 ring-border/60 overflow-hidden bg-subtle"
+              >
+                <Image src={p.src} alt="" fill sizes="60px" className="object-cover" />
+                <div className="absolute top-1 right-1 inline-flex items-center justify-center w-3 h-3 rounded-full bg-sage" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Issue log header */}
+        <div className="mt-6">
+          <div className="text-[11px] uppercase tracking-[0.12em] text-muted">
+            Issue log
+          </div>
+          <div className="mt-2 rounded-lg ring-1 ring-border/60 overflow-hidden text-[13px]">
+            <div className="grid grid-cols-12 gap-2 px-3 py-2 bg-subtle/40 text-[11px] uppercase tracking-[0.1em] text-muted">
+              <span className="col-span-3">Raised</span>
+              <span className="col-span-6">Summary</span>
+              <span className="col-span-3 text-right">Resolved</span>
+            </div>
+            <div className="grid grid-cols-12 gap-2 px-3 py-2.5">
+              <span className="col-span-3 text-muted tabular-nums">May 3, 6:42p</span>
+              <span className="col-span-6 text-foreground/85">Paper towels low, N restroom</span>
+              <span className="col-span-3 text-right text-sage tabular-nums">+ 38m</span>
+            </div>
+            <div className="grid grid-cols-12 gap-2 px-3 py-2.5 border-t border-border/60">
+              <span className="col-span-3 text-muted tabular-nums">May 19, 7:01p</span>
+              <span className="col-span-6 text-foreground/85">Conference B chairs misaligned</span>
+              <span className="col-span-3 text-right text-sage tabular-nums">+ 24m</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+  );
+}
+
+function MiniStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg ring-1 ring-border/60 bg-subtle/30 px-3 py-2.5">
+      <div className="text-[11px] uppercase tracking-[0.1em] text-muted">{label}</div>
+      <div className="mt-1 font-serif text-[22px] tabular-nums leading-none">{value}</div>
+    </div>
+  );
+}
+
+function ChatThreadMock() {
+  return (
+    <figure className="rounded-2xl border border-border/70 bg-background overflow-hidden shadow-[0_24px_60px_-30px_rgba(28,37,32,0.18)]">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-border/60 bg-subtle/40 text-[12px] text-muted">
+        <span>Sarah · facilities at Acme HQ</span>
+        <span className="tabular-nums">Today · 5:22 PM</span>
+      </div>
+      <div className="p-5 md:p-6 space-y-3">
+        <Bubble side="left" time="5:22 PM">
+          Hi, north restroom is out of paper towels. Last time it took a
+          week to get a response, hoping to do better this round.
+        </Bubble>
+        <Bubble side="right" time="5:24 PM">
+          On it. Crew lead headed back, ETA 6:00pm. I&rsquo;ll text you when
+          it&rsquo;s restocked.
+        </Bubble>
+        <Bubble side="right" time="6:02 PM">
+          Restocked. Photo&rsquo;s in this month&rsquo;s report. Sorry for the
+          gap.
+        </Bubble>
+      </div>
+      <div className="px-5 py-3 border-t border-border/60 bg-subtle/30 flex items-center justify-between text-[12px] text-muted">
+        <span>Response time: 2 min · Resolution: 38 min</span>
+        <span className="inline-flex items-center gap-1.5 text-sage">
+          <span className="inline-flex h-1.5 w-1.5 rounded-full bg-sage" /> Logged in May report
+        </span>
+      </div>
+    </figure>
+  );
+}
+
+function Bubble({
+  side,
+  time,
+  children,
+}: {
+  side: "left" | "right";
+  time: string;
+  children: React.ReactNode;
+}) {
+  const isRight = side === "right";
+  return (
+    <div className={`flex ${isRight ? "justify-end" : "justify-start"}`}>
+      <div
+        className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[14px] leading-[1.45] ${
+          isRight
+            ? "bg-accent text-background rounded-br-sm"
+            : "bg-subtle text-foreground rounded-bl-sm"
+        }`}
+      >
+        <p>{children}</p>
+        <div
+          className={`mt-1 text-[11px] tabular-nums ${isRight ? "text-background/60" : "text-muted"}`}
+        >
+          {time}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="m5 12 5 5L20 7" />
+    </svg>
   );
 }
 

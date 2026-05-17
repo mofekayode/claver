@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { FinalCta } from "@/components/sections/final-cta";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 const services = [
   {
     title: "Office cleaning",
+    image: "/services/office.jpg",
     summary:
       "Daily and weekly cleans for offices, studios, and co-working spaces, built around how your team actually uses the space.",
     points: [
@@ -22,6 +24,7 @@ const services = [
   },
   {
     title: "Medical & dental",
+    image: "/services/medical.jpg",
     summary:
       "Dental and primary-care offices with the cleaning protocols and documentation those environments require.",
     points: [
@@ -32,6 +35,7 @@ const services = [
   },
   {
     title: "Retail & storefront",
+    image: "/services/retail.jpg",
     summary:
       "Boutiques, salons, fitness studios, and storefronts that need to look new every morning the doors open.",
     points: [
@@ -42,6 +46,7 @@ const services = [
   },
   {
     title: "Industrial & warehouse",
+    image: "/services/warehouse.jpg",
     summary:
       "Distribution, light-manufacturing, and back-of-house spaces where cleanliness is a safety and OSHA story, not a vibe.",
     points: [
@@ -78,29 +83,40 @@ export default function ServicesPage() {
             {services.map((s) => (
               <article
                 key={s.title}
-                className="bg-background p-8 md:p-10 flex flex-col"
+                className="bg-background flex flex-col overflow-hidden"
               >
-                <h2 className="font-serif text-[26px] md:text-[28px] tracking-[-0.01em]">
-                  {s.title}
-                </h2>
-                <p className="mt-3 text-[16px] text-muted leading-[1.55]">
-                  {s.summary}
-                </p>
-                <ul className="mt-6 space-y-2.5 text-[15px] text-foreground/85">
-                  {s.points.map((p) => (
-                    <li key={p} className="flex gap-3">
-                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                      <span>{p}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/quote"
-                  className="mt-8 inline-flex items-center gap-1.5 text-accent hover:text-accent-hover transition-colors text-[15px] font-medium"
-                >
-                  Request a quote
-                  <span aria-hidden="true">→</span>
-                </Link>
+                <div className="relative aspect-video bg-subtle">
+                  <Image
+                    src={s.image}
+                    alt={`${s.title} — example space`}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-8 md:p-10 flex flex-col flex-1">
+                  <h2 className="font-serif text-[26px] md:text-[28px] tracking-[-0.01em]">
+                    {s.title}
+                  </h2>
+                  <p className="mt-3 text-[16px] text-muted leading-[1.55]">
+                    {s.summary}
+                  </p>
+                  <ul className="mt-6 space-y-2.5 text-[15px] text-foreground/85">
+                    {s.points.map((p) => (
+                      <li key={p} className="flex gap-3">
+                        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/quote"
+                    className="mt-8 inline-flex items-center gap-1.5 text-accent hover:text-accent-hover transition-colors text-[15px] font-medium"
+                  >
+                    Request a quote
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
