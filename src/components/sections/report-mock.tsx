@@ -5,7 +5,6 @@ const photoZones = [
   { label: "Restrooms", src: "/report/restrooms.jpg" },
   { label: "Kitchen", src: "/report/kitchen.jpg" },
   { label: "Conference A", src: "/report/conference-a.jpg" },
-  { label: "Lobby", src: "/report/lobby.jpg" },
   { label: "Open desks", src: "/report/open-desks.jpg" },
   { label: "Entryway", src: "/report/entryway.jpg" },
 ];
@@ -103,7 +102,7 @@ export function ReportMock() {
                     132 photos · 6 zones
                   </span>
                 </div>
-                <div className="mt-5 grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-3">
+                <div className="mt-5 grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
                   {photoZones.map((z) => (
                     <PhotoTile key={z.label} label={z.label} src={z.src} />
                   ))}

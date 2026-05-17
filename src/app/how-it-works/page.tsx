@@ -154,10 +154,10 @@ export default function HowItWorksPage() {
 // ============ MOCKS ============
 
 const PILLAR_1_PHOTOS = [
-  { src: "/report/lobby.jpg", label: "Lobby" },
   { src: "/report/conference-a.jpg", label: "Conference A" },
   { src: "/report/kitchen.jpg", label: "Kitchen" },
   { src: "/report/restrooms.jpg", label: "Restrooms" },
+  { src: "/report/open-desks.jpg", label: "Open desks" },
 ];
 
 function PhotoGridMock() {
@@ -290,16 +290,15 @@ function ChatThreadMock() {
       </div>
       <div className="p-5 md:p-6 space-y-3">
         <Bubble side="left" time="5:22 PM">
-          Hi, north restroom is out of paper towels. Last time it took a
-          week to get a response, hoping to do better this round.
+          Hi, north restroom is out of paper towels. Can someone restock
+          before tomorrow morning?
         </Bubble>
         <Bubble side="right" time="5:24 PM">
-          On it. Crew lead headed back, ETA 6:00pm. I&rsquo;ll text you when
-          it&rsquo;s restocked.
+          On it. Crew lead is en route, ETA 6:00 PM. I&rsquo;ll text you the
+          moment it&rsquo;s restocked.
         </Bubble>
         <Bubble side="right" time="6:02 PM">
-          Restocked. Photo&rsquo;s in this month&rsquo;s report. Sorry for the
-          gap.
+          Restocked. Photo will be in next week&rsquo;s service report.
         </Bubble>
       </div>
       <div className="px-5 py-3 border-t border-border/60 bg-subtle/30 flex items-center justify-between text-[12px] text-muted">

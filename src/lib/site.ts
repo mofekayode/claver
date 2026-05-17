@@ -33,8 +33,8 @@ export const site = {
     "Piedmont",
   ],
   nav: [
-    { href: "/services", label: "Services" },
     { href: "/how-it-works", label: "How we work" },
+    { href: "/services", label: "Services" },
     { href: "/about", label: "About" },
   ] as const,
 };
