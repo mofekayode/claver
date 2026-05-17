@@ -157,7 +157,7 @@ const PILLAR_1_PHOTOS = [
   { src: "/report/conference-a.jpg", label: "Conference A" },
   { src: "/report/kitchen.jpg", label: "Kitchen" },
   { src: "/report/restrooms.jpg", label: "Restrooms" },
-  { src: "/report/open-desks.jpg", label: "Open desks" },
+  { src: "/report/open-desks.jpg", label: "Workstations" },
 ];
 
 function PhotoGridMock() {
