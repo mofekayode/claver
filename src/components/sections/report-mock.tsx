@@ -1,12 +1,13 @@
+import Image from "next/image";
 import { Container } from "@/components/container";
 
 const photoZones = [
-  { label: "Restrooms", tone: "from-sage/30 to-subtle" },
-  { label: "Kitchen", tone: "from-accent/15 to-subtle" },
-  { label: "Conference A", tone: "from-foreground/10 to-subtle" },
-  { label: "Lobby", tone: "from-subtle to-foreground/8" },
-  { label: "Open desks", tone: "from-sage/20 to-subtle" },
-  { label: "Entryway", tone: "from-accent/10 to-subtle" },
+  { label: "Restrooms", src: "/report/restrooms.jpg" },
+  { label: "Kitchen", src: "/report/kitchen.jpg" },
+  { label: "Conference A", src: "/report/conference-a.jpg" },
+  { label: "Lobby", src: "/report/lobby.jpg" },
+  { label: "Open desks", src: "/report/open-desks.jpg" },
+  { label: "Entryway", src: "/report/entryway.jpg" },
 ];
 
 const issues = [
@@ -104,7 +105,7 @@ export function ReportMock() {
                 </div>
                 <div className="mt-5 grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-3">
                   {photoZones.map((z) => (
-                    <PhotoTile key={z.label} label={z.label} tone={z.tone} />
+                    <PhotoTile key={z.label} label={z.label} src={z.src} />
                   ))}
                 </div>
               </div>
@@ -188,15 +189,25 @@ function Stat({
   );
 }
 
-function PhotoTile({ label, tone }: { label: string; tone: string }) {
+function PhotoTile({ label, src }: { label: string; src: string }) {
   return (
-    <div
-      className={`relative aspect-[4/3] rounded-lg ring-1 ring-border/60 bg-gradient-to-br ${tone} overflow-hidden`}
-    >
-      <div className="absolute top-2 right-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-sage text-background">
+    <div className="relative aspect-4/3 rounded-lg ring-1 ring-border/60 overflow-hidden bg-subtle">
+      <Image
+        src={src}
+        alt={`${label} — verified clean`}
+        fill
+        sizes="(min-width: 768px) 16vw, 33vw"
+        className="object-cover"
+      />
+      {/* Soft gradient overlay so the label/badge stay legible on bright photos */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-linear-to-t from-foreground/40 via-transparent to-foreground/10"
+      />
+      <div className="absolute top-2 right-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-sage text-background ring-1 ring-background/60">
         <CheckIcon className="w-3 h-3" />
       </div>
-      <div className="absolute bottom-2 left-2 right-2 text-[11px] md:text-[12px] text-foreground/70">
+      <div className="absolute bottom-2 left-2 right-2 text-[11px] md:text-[12px] font-medium text-white drop-shadow-sm">
         {label}
       </div>
     </div>
