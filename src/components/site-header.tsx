@@ -1,10 +1,23 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Container } from "@/components/container";
 import { Button } from "@/components/button";
 import { Wordmark } from "@/components/wordmark";
 import { site } from "@/lib/site";
 
+/**
+ * Paths where the primary nav links are hidden so paid visitors stay focused
+ * on the form. The Claver logo, phone number, and "Get a quote" button still
+ * render — just no nav links to Services / How we work / About.
+ */
+const PATHS_WITHOUT_NAV = new Set(["/east-bay-commercial-cleaning"]);
+
 export function SiteHeader() {
+  const pathname = usePathname();
+  const hideNav = PATHS_WITHOUT_NAV.has(pathname);
+
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/70 border-b border-border/60">
       <Container size="wide">
@@ -13,20 +26,22 @@ export function SiteHeader() {
             <Wordmark />
           </Link>
 
-          <nav
-            aria-label="Primary"
-            className="hidden md:flex items-center gap-8 text-[15px] text-muted"
-          >
-            {site.nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="hover:text-foreground transition-colors"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          {hideNav ? null : (
+            <nav
+              aria-label="Primary"
+              className="hidden md:flex items-center gap-8 text-[15px] text-muted"
+            >
+              {site.nav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          )}
 
           <div className="flex items-center gap-2 sm:gap-3">
             <a
@@ -42,7 +57,7 @@ export function SiteHeader() {
             >
               {site.phone}
             </a>
-            <Button href="/quote" size="md">
+            <Button href={hideNav ? "#quote-form" : "/quote"} size="md">
               Get a quote
             </Button>
           </div>

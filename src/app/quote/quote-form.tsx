@@ -8,23 +8,13 @@ import { AddressAutocomplete } from "@/components/address-autocomplete";
 
 const initialState: QuoteFormState = { status: "idle" };
 
-const SQ_FT = ["<2,500", "2,500-5,000", "5,000-10,000", "10,000-25,000", "25,000+"];
-const FREQUENCY = [
-  "Less than 1x/week",
-  "1x/week",
-  "2-3x/week",
-  "Daily",
-  "Not sure yet",
-];
-
 export function QuoteForm() {
   const [state, action] = useActionState(submitQuote, initialState);
 
   return (
     <form action={action} noValidate className="grid gap-7">
       {/* Honeypot — hidden from real users, filled by naive bots. Server
-          rejects any submission where this field is non-empty. Keep
-          autocomplete="off" and tabIndex=-1 so even keyboard users skip it. */}
+          rejects any submission where this field is non-empty. */}
       <div
         aria-hidden="true"
         style={{
@@ -72,23 +62,13 @@ export function QuoteForm() {
         />
       </div>
 
-      <div className="grid gap-7 md:grid-cols-2">
-        <Field
-          label="Phone"
-          name="phone"
-          type="tel"
-          autoComplete="tel"
-          inputMode="tel"
-          state={state}
-        />
-        <Field
-          label="Email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          state={state}
-        />
-      </div>
+      <Field
+        label="Email"
+        name="email"
+        type="email"
+        autoComplete="email"
+        state={state}
+      />
 
       <div>
         <label
@@ -110,43 +90,6 @@ export function QuoteForm() {
             {state.errors.address}
           </p>
         )}
-      </div>
-
-      <Select
-        label="Approximate square footage"
-        name="squareFootage"
-        options={SQ_FT}
-        state={state}
-      />
-
-      <Select
-        label="Cleaning frequency desired"
-        name="frequency"
-        options={FREQUENCY}
-        state={state}
-      />
-
-      <div>
-        <label
-          htmlFor="notes"
-          className="block text-[14px] font-medium text-foreground/80"
-        >
-          Anything specific we should know?{" "}
-          <span className="text-muted/80 font-normal">(optional)</span>
-        </label>
-        <textarea
-          id="notes"
-          name="notes"
-          rows={4}
-          defaultValue={state.values?.notes ?? ""}
-          className={cn(
-            "mt-2 w-full rounded-xl border border-border bg-background px-4 py-3",
-            "text-[16px] leading-normal placeholder:text-muted/60",
-            "focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15",
-            "transition-colors resize-none",
-          )}
-          placeholder="Special floor materials, after-hours access, security, anything we should know."
-        />
       </div>
 
       <SubmitButton />

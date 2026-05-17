@@ -28,10 +28,9 @@ export const site = {
   serviceAreas: [
     "Oakland",
     "Berkeley",
-    "San Francisco",
-    "Walnut Creek",
     "Emeryville",
     "Alameda",
+    "Piedmont",
   ],
   nav: [
     { href: "/services", label: "Services" },

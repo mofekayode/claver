@@ -4,22 +4,6 @@ import { redirect } from "next/navigation";
 import { Resend } from "resend";
 import { renderQuoteEmail } from "@/lib/quote-email";
 
-const SQ_FT_OPTIONS = new Set([
-  "<2,500",
-  "2,500-5,000",
-  "5,000-10,000",
-  "10,000-25,000",
-  "25,000+",
-]);
-
-const FREQUENCY_OPTIONS = new Set([
-  "Less than 1x/week",
-  "1x/week",
-  "2-3x/week",
-  "Daily",
-  "Not sure yet",
-]);
-
 export type QuoteFormState = {
   status: "idle" | "success" | "error";
   message?: string;
@@ -27,24 +11,13 @@ export type QuoteFormState = {
   values?: Partial<Record<QuoteField, string>>;
 };
 
-type QuoteField =
-  | "businessName"
-  | "contactName"
-  | "phone"
-  | "email"
-  | "address"
-  | "squareFootage"
-  | "frequency"
-  | "notes";
+type QuoteField = "businessName" | "contactName" | "email" | "address";
 
 const REQUIRED: QuoteField[] = [
   "businessName",
   "contactName",
-  "phone",
   "email",
   "address",
-  "squareFootage",
-  "frequency",
 ];
 
 export async function submitQuote(
@@ -63,12 +36,8 @@ export async function submitQuote(
   const values: Record<QuoteField, string> = {
     businessName: String(formData.get("businessName") ?? "").trim(),
     contactName: String(formData.get("contactName") ?? "").trim(),
-    phone: String(formData.get("phone") ?? "").trim(),
     email: String(formData.get("email") ?? "").trim(),
     address: String(formData.get("address") ?? "").trim(),
-    squareFootage: String(formData.get("squareFootage") ?? "").trim(),
-    frequency: String(formData.get("frequency") ?? "").trim(),
-    notes: String(formData.get("notes") ?? "").trim(),
   };
 
   const errors: Partial<Record<QuoteField, string>> = {};
@@ -81,18 +50,6 @@ export async function submitQuote(
 
   if (values.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
     errors.email = "Please enter a valid email";
-  }
-
-  if (values.phone && values.phone.replace(/\D/g, "").length < 7) {
-    errors.phone = "Please enter a valid phone number";
-  }
-
-  if (values.squareFootage && !SQ_FT_OPTIONS.has(values.squareFootage)) {
-    errors.squareFootage = "Please choose an option";
-  }
-
-  if (values.frequency && !FREQUENCY_OPTIONS.has(values.frequency)) {
-    errors.frequency = "Please choose an option";
   }
 
   if (Object.keys(errors).length > 0) {
