@@ -31,6 +31,7 @@ export const site = {
     "Emeryville",
     "Alameda",
     "Piedmont",
+    "San Francisco",
   ],
   nav: [
     { href: "/how-it-works", label: "How we work" },

@@ -4,13 +4,13 @@ import { PaidLandingTracker } from "@/components/paid-landing-tracker";
 
 /**
  * Single paid landing page for Google Ads traffic. Inclusive headline so
- * visitors from any of our 5 service cities (Oakland, Berkeley, Emeryville,
- * Alameda, Piedmont) feel addressed.
+ * visitors from any of our 6 service cities (Oakland, Berkeley, Emeryville,
+ * Alameda, Piedmont, San Francisco) feel addressed.
  */
 export function PaidLanding() {
   return (
     <>
-      <PaidLandingTracker slug="east-bay-commercial-cleaning" city="East Bay" />
+      <PaidLandingTracker slug="east-bay-commercial-cleaning" city="Bay Area" />
 
       {/* ===== HERO ===== */}
       <section className="relative pt-12 md:pt-20 pb-10 md:pb-14">
@@ -21,11 +21,11 @@ export function PaidLanding() {
                 <span className="absolute inset-0 rounded-full bg-sage opacity-60 animate-ping" />
                 <span className="relative rounded-full bg-sage h-1.5 w-1.5" />
               </span>
-              Now serving the East Bay
+              Now serving the Bay Area
             </div>
 
             <h1 className="mt-7 font-serif text-[44px] leading-[1.05] tracking-[-0.02em] sm:text-[56px] md:text-[68px] lg:text-[72px]">
-              East Bay commercial cleaning that{" "}
+              Bay Area commercial cleaning that{" "}
               <span
                 className="text-accent italic"
                 style={{ fontVariationSettings: "'SOFT' 100" }}
@@ -37,13 +37,13 @@ export function PaidLanding() {
 
             <p className="mt-7 max-w-2xl text-lg md:text-xl text-muted leading-[1.55]">
               Photo verification, monthly service reports, and 24-hour issue
-              resolution. The standard for East Bay office managers who are
+              resolution. The standard for Bay Area office managers who are
               done chasing their cleaning company.
             </p>
 
             <p className="mt-5 max-w-2xl text-[15px] text-muted/90">
-              Serving Oakland, Berkeley, Emeryville, Alameda, and Piedmont
-              with crews based across the East Bay.
+              Serving Oakland, Berkeley, Emeryville, Alameda, Piedmont, and
+              San Francisco.
             </p>
 
             <ul
