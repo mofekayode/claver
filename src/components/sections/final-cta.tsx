@@ -33,13 +33,15 @@ export function FinalCta() {
                 href="/quote"
                 className="inline-flex h-13 items-center justify-center rounded-full px-7 bg-background text-foreground font-medium text-base hover:bg-background/90 transition-colors"
               >
-                Request a walkthrough
+                Request a quote
               </Link>
               <a
-                href={site.phoneHref}
-                className="self-center sm:self-auto md:self-end text-background/80 hover:text-background tabular-nums transition-colors"
+                href={site.calendlyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-center sm:self-auto md:self-end text-background/80 hover:text-background transition-colors"
               >
-                or call {site.phone}
+                or book a walkthrough
               </a>
             </div>
           </div>

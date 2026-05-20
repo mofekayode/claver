@@ -10,12 +10,14 @@ export function CallReminder() {
       <Container size="wide">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <p className="text-[15px] md:text-[16px] text-foreground/80">
-            Need to talk to a human?{" "}
+            Prefer to talk first?{" "}
             <a
-              href={site.phoneHref}
-              className="text-foreground font-medium tabular-nums hover:text-accent transition-colors underline-offset-4 hover:underline"
+              href={site.calendlyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground font-medium hover:text-accent transition-colors underline-offset-4 hover:underline"
             >
-              Call {site.phone}
+              Book a 30-min walkthrough
             </a>
             <span className="text-muted"> · {site.hours}</span>
           </p>
