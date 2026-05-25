@@ -97,7 +97,16 @@ async function sendQuoteEmail(
 ) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.warn("[quote] RESEND_API_KEY missing — skipping email", values);
+    // Loud + structured so Vercel function logs / log drains can alert on it.
+    console.error(
+      "[quote][EMAIL_FAILURE] RESEND_API_KEY is missing or empty",
+      JSON.stringify({
+        reason: "missing_api_key",
+        businessName: values.businessName,
+        email: values.email,
+        submittedAt: submittedAt.toISOString(),
+      }),
+    );
     return;
   }
 
@@ -109,8 +118,6 @@ async function sendQuoteEmail(
     .map((s) => s.trim())
     .filter(Boolean);
 
-  // Until the claverservices.com domain is verified in Resend, send from the
-  // Resend onboarding sender. Once verified, set QUOTE_FROM_EMAIL in env.
   const from = process.env.QUOTE_FROM_EMAIL
     ? `Claver <${process.env.QUOTE_FROM_EMAIL}>`
     : "Claver <onboarding@resend.dev>";
@@ -128,11 +135,32 @@ async function sendQuoteEmail(
       text,
     });
     if (result.error) {
-      console.error("[quote] resend error", result.error);
+      console.error(
+        "[quote][EMAIL_FAILURE] Resend returned an error",
+        JSON.stringify({
+          reason: "resend_api_error",
+          error: result.error,
+          businessName: values.businessName,
+          email: values.email,
+        }),
+      );
+    } else {
+      console.log(
+        "[quote] email delivered",
+        JSON.stringify({ id: result.data?.id, businessName: values.businessName }),
+      );
     }
   } catch (err) {
     // Never block the user's submission on email failure — they still
     // get redirected to the thank-you page and can book the walkthrough.
-    console.error("[quote] resend send threw", err);
+    console.error(
+      "[quote][EMAIL_FAILURE] Resend send threw",
+      JSON.stringify({
+        reason: "thrown_exception",
+        error: err instanceof Error ? { name: err.name, message: err.message } : String(err),
+        businessName: values.businessName,
+        email: values.email,
+      }),
+    );
   }
 }

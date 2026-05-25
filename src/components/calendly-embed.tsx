@@ -2,6 +2,14 @@
 
 import Script from "next/script";
 
+declare global {
+  interface Window {
+    Calendly?: {
+      initInlineWidget: (opts: { url: string; parentElement: HTMLElement }) => void;
+    };
+  }
+}
+
 export function CalendlyEmbed({
   url,
   prefill,
@@ -28,7 +36,14 @@ export function CalendlyEmbed({
       />
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
+        onLoad={() => {
+          const el = document.querySelector<HTMLElement>(".calendly-inline-widget");
+          if (el && window.Calendly && !el.dataset.initialized) {
+            window.Calendly.initInlineWidget({ url: widgetUrl, parentElement: el });
+            el.dataset.initialized = "1";
+          }
+        }}
       />
       <div
         className="calendly-inline-widget rounded-2xl overflow-hidden ring-1 ring-border/70"
