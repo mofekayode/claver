@@ -63,6 +63,13 @@ export async function submitQuote(
 
   const submittedAt = new Date();
 
+  // Belt-and-suspenders: capture the full submission as a PostHog event
+  // BEFORE the email send. If Resend ever fails again (as it did silently
+  // for the empty-API-key case on 2026-05-24), every form field is still
+  // recoverable from PostHog. The thank-you redirect only carries name +
+  // email — businessName and address would otherwise be lost.
+  await capturePostHogServerEvent(values, submittedAt);
+
   // Email via Resend (primary delivery path).
   await sendQuoteEmail(values, submittedAt);
 
@@ -89,6 +96,76 @@ export async function submitQuote(
     email: values.email,
   });
   redirect(`/quote/thank-you?${params.toString()}`);
+}
+
+/**
+ * Server-side PostHog capture so every form submission lands in PostHog
+ * with the FULL field set, regardless of what happens with the email path.
+ * Uses the public capture endpoint with the project token; the token is
+ * the same value already exposed to the client via NEXT_PUBLIC_*.
+ */
+async function capturePostHogServerEvent(
+  values: Record<QuoteField, string>,
+  submittedAt: Date,
+) {
+  const token =
+    process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN ||
+    process.env.NEXT_PUBLIC_POSTHOG_KEY;
+  if (!token) {
+    console.error(
+      "[quote][POSTHOG_FAILURE] PostHog token missing — full payload not captured",
+      JSON.stringify({
+        reason: "missing_token",
+        businessName: values.businessName,
+        email: values.email,
+      }),
+    );
+    return;
+  }
+  const host =
+    process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
+
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 3000);
+    const res = await fetch(`${host}/capture/`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      signal: ctrl.signal,
+      body: JSON.stringify({
+        api_key: token,
+        event: "quote_submitted_server",
+        distinct_id: values.email,
+        timestamp: submittedAt.toISOString(),
+        properties: {
+          businessName: values.businessName,
+          contactName: values.contactName,
+          email: values.email,
+          address: values.address,
+          submittedAt: submittedAt.toISOString(),
+          source: "cleanco-web/quote/actions",
+          $process_person_profile: false,
+        },
+      }),
+    });
+    clearTimeout(timer);
+    if (!res.ok) {
+      console.error(
+        "[quote][POSTHOG_FAILURE] capture returned non-2xx",
+        JSON.stringify({ status: res.status, businessName: values.businessName }),
+      );
+    }
+  } catch (err) {
+    // Never block the submission on PostHog. Log loudly so we know.
+    console.error(
+      "[quote][POSTHOG_FAILURE] capture threw",
+      JSON.stringify({
+        error: err instanceof Error ? { name: err.name, message: err.message } : String(err),
+        businessName: values.businessName,
+        email: values.email,
+      }),
+    );
+  }
 }
 
 async function sendQuoteEmail(
